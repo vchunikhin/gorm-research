@@ -1,1 +1,2 @@
-https://gorm.io/
+- https://gorm.io/
+- https://codevoweb.com/build-restful-crud-api-with-golang/
