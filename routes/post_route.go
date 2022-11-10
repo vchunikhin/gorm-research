@@ -21,4 +21,7 @@ func NewPostRouteController(postController *controllers.PostController) *PostRou
 func (pc *PostRouteController) PostRoute(rg *gin.RouterGroup) {
 	router := rg.Group(relativePath)
 	router.POST("/", pc.postController.CreatePost)
+	router.GET("/", pc.postController.GetPosts)
+	router.DELETE("/:id", pc.postController.DeletePost)
+	router.PUT("/:id", pc.postController.UpdatePost)
 }

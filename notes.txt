@@ -1,2 +1,3 @@
 - https://gorm.io/
 - https://codevoweb.com/build-restful-crud-api-with-golang/
+- https://medium.com/@venu-prasanna/developing-a-restful-api-with-go-gin-and-gorm-part-1-router-setup-db-configuration-a31a74ad416d
