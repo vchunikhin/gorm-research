@@ -4,15 +4,37 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+
+	"gorm-research/internal/types"
 )
 
 type Post struct {
-	ID        uuid.UUID `gorm:"type:char(36);primary_key" json:"id,omitempty"`
-	Title     string    `gorm:"type:text;not null" json:"title,omitempty"`
-	Content   string    `gorm:"type:text;not null" json:"content,omitempty"`
-	Image     string    `gorm:"type:text;not null" json:"image,omitempty"`
-	CreatedAt time.Time `gorm:"not null" json:"created_at,omitempty"`
-	UpdatedAt time.Time `gorm:"not null" json:"updated_at,omitempty"`
+	ID        uuid.UUID `gorm:"type:char(36);primary_key"`
+	Title     string    `gorm:"type:text;not null"`
+	Content   string    `gorm:"type:text;not null"`
+	Image     string    `gorm:"type:text;not null"`
+	CreatedAt time.Time `gorm:"not null"`
+	UpdatedAt time.Time `gorm:"not null"`
+}
+
+func (p *Post) ToResponse() *PostResponse {
+	return &PostResponse{
+		ID:        p.ID,
+		Title:     p.Title,
+		Content:   p.Content,
+		Image:     p.Image,
+		CreatedAt: types.CustomTime{Time: p.CreatedAt},
+		UpdatedAt: types.CustomTime{Time: p.UpdatedAt},
+	}
+}
+
+type PostResponse struct {
+	ID        uuid.UUID        `json:"id,omitempty"`
+	Title     string           `json:"title,omitempty"`
+	Content   string           `json:"content,omitempty"`
+	Image     string           `json:"image,omitempty"`
+	CreatedAt types.CustomTime `json:"created_at,omitempty"`
+	UpdatedAt types.CustomTime `json:"updated_at,omitempty"`
 }
 
 type CreatePostRequest struct {

@@ -49,7 +49,7 @@ func (pc *PostController) CreatePost(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, successResponse(post))
+	ctx.JSON(http.StatusCreated, successResponse(post.ToResponse()))
 }
 
 func (pc PostController) GetPosts(ctx *gin.Context) {
@@ -75,7 +75,13 @@ func (pc PostController) GetPosts(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(result.Error.Error()))
 		return
 	}
-	ctx.JSON(http.StatusOK, paginationResponse(len(posts), posts))
+
+	var postsResponse []*models.PostResponse
+	for _, post := range posts {
+		postsResponse = append(postsResponse, post.ToResponse())
+	}
+
+	ctx.JSON(http.StatusOK, paginationResponse(len(postsResponse), postsResponse))
 }
 
 func (pc *PostController) DeletePost(ctx *gin.Context) {
@@ -116,5 +122,5 @@ func (pc *PostController) UpdatePost(ctx *gin.Context) {
 
 	pc.DB.Model(&post).Updates(updatedPost)
 
-	ctx.JSON(http.StatusOK, successResponse(post))
+	ctx.JSON(http.StatusOK, successResponse(post.ToResponse()))
 }
